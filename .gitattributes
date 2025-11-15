@@ -1,0 +1,2 @@
+data/zebrafish_blast_results_clean.txt.gz filter=lfs diff=lfs merge=lfs -text
+data/Drerio_FishTEDB/Danio_rerio_TE_table.tsv filter=lfs diff=lfs merge=lfs -text
