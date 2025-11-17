@@ -1,0 +1,119 @@
+\documentclass[12pt, a4paper]{article} % Assuming 'article' class, adjust if needed
+
+% --- Preamble (Include necessary packages) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[a4paper, margin=2.5cm]{geometry} % Adjust margins as needed
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{float} % For [H] placement if needed later
+\usepackage{csquotes} % Required by biblatex when using babel
+\usepackage[backend=bibtex, style=numeric]{biblatex} % changed backend to bibtex for simpler compile (or keep biber if you prefer)
+\addbibresource{references.bib} % use plain relative filename; ensure references.bib is in the same folder as report.tex
+
+% --- ADD: Allow underscores in normal text to avoid "Missing $ inserted" errors ---
+\usepackage{underscore}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Report_GroupX_DRario},
+    pdfpagemode=FullScreen
+}
+
+% --- Custom Title Page Info ---
+\newcommand{\coursename}{Comparative Genomics}
+\newcommand{\academicyear}{2025-2026}
+\newcommand{\instructorname}{Rizzon}
+\newcommand{\groupmembers}{Erine Benoist, Denys Buryi, Raul Duran De Alba and Michalis-Daniel Lazar}
+
+\begin{document}
+
+% --- Title Page ---
+\begin{titlepage}
+    \centering % Center everything on the title page
+
+    % --- Logos ---
+    \begin{minipage}[t]{0.1\textwidth}
+        \centering
+        \includegraphics[height=2.5cm]{images/logo_blue.png} % Adjust height as needed
+    \end{minipage}
+    \hfill % Pushes logos to opposite sides
+    \begin{minipage}[t]{0.25\textwidth}
+        \centering
+        \raisebox{0.7cm}{\includegraphics[height=1.5cm]{images/logo_purple.png}} % Adjust height as needed
+    \end{minipage}
+
+    
+    {\Huge \bfseries Comparative Genomic Analysis of Danio Rario \par}
+
+
+    \vspace{1cm} % Space between logos and title
+    \begin{minipage}[t]{1\textwidth}
+        \centering
+        \includegraphics[width=12cm]{images/title_page.png}
+    \end{minipage}
+    \vspace{0.5cm}
+    % --- Title ---
+
+
+    % --- Course/Module Info ---
+    {\Large \coursename \space \academicyear \par}
+
+    \vspace{1cm} % Space before author/group info
+
+    % --- Author/Group Info ---
+    {\large \textbf{Prepared by:} \par}
+    \vspace{0.2cm}
+    \begin{Large}
+    \groupmembers
+    \end{Large}
+    \par
+
+    \vspace{0.5cm} % Space before instructor info
+
+    % --- Instructor Info ---
+    {\large \textbf{Supervised by:} \space \instructorname \par}
+
+
+    \vfill % Pushes the date to the bottom
+
+    % --- Date ---
+    {\large \today \par} % Automatically inserts the compilation date
+    % Or use: {\large October 27, 2025 \par} for a fixed date
+
+    %__Cover illustration credit__
+    \vspace{0.5cm}
+    {\small \textit{Cover illustration by Claire Nicolet}\par}  
+
+    %\vspace*{1cm} % Add some space at the bottom
+
+\end{titlepage}
+
+% --- Table of Contents ---
+\tableofcontents
+\newpage
+
+% --- Introduction ---
+\section{Introduction}
+% Your introduction content goes here
+
+
+% --- References Section ---
+\newpage
+\printbibliography[title={References}]
+
+% NOTE: Compile sequence when using backend=bibtex:
+%   pdflatex report
+%   bibtex report
+%   pdflatex report
+%   pdflatex report
+% If you prefer biber, set backend=biber and run: pdflatex -> biber -> pdflatex x2
+
+\end{document}
