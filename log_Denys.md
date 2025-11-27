@@ -202,3 +202,17 @@ Columns now:
 
 6) age_Myr
 
+
+```
+wc -l danRer11_te_simple.tsv
+4535283
+
+# Total TE bp
+awk '{sum += $4} END {print sum}' danRer11_te_simple.tsv
+
+# Per-chromosome TE count and total bp
+awk '{cnt[$1]++; bp[$1]+= $4} 
+     END{for (c in cnt) print c, cnt[c], bp[c]}' danRer11_te_simple.tsv \
+  | sort
+```
+
