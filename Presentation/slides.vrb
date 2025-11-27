@@ -1,0 +1,15 @@
+\begin{itemize}
+\item Font types can be changed in loadslides.tex.
+    \item For lecture notes or reports, the \textit{Lecture} theme together with \verb +\RequirePackage{palatino}+ and \verb+\usefonttheme{serif}+ works well.
+    \item For talks and other presentations, \verb+\RequirePackage[scaled]{helvet}+ with any of the other themes, such as \textit{Gold}, works better.
+    \item Text can be highlighted as follows:
+    \begin{itemize}
+        \item Regular
+        \item \emphasize{Emphasize}
+        \item \alert{Alert}
+        \item \example{Example}
+        \item \textit{Italic}
+        \item \textbf{Bold}
+    \end{itemize}
+\end{itemize}
+
