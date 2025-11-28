@@ -9,12 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 Exploratory Data Analysis on protein families (paralogs) in zebrafish
-```{r}
-setwd("C:/Users/mihal/Desktop/M2_Genomics/Comparative Genomics/histograms_zebrafish/")
 
-HS_fam_path = "zebrafish_HS_MCL_families.txt"
-MS_fam_path = "zebrafish_MS_MCL_families.txt"
-LS_fam_path = "zebrafish_LS_MCL_families.txt"
+```{r}
+
+HS_fam_path = "data/zebrafish_HS_MCL_families.txt"
+MS_fam_path = "data/zebrafish_MS_MCL_families.txt"
+LS_fam_path = "data/zebrafish_LS_MCL_families.txt"
 
 fam_HS <- read.table(HS_fam_path,
                      header = FALSE, stringsAsFactors = FALSE)
