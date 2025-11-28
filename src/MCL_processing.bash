@@ -13,79 +13,30 @@ wc -l "$MCL"
 awk -F'\t' '{print NF}' "$MCL" | sort -nu | tail -n 1
 
 
-# We obtain the gene lists for family size ==2
-awk -F'\t' '
-FNR==NR {
-    # First pass: count non-empty cells in each column
-    for (i = 1; i <= NF; i++) {
-        if ($i != "") cnt[i]++
-    }
-    if (NF > maxNF) maxNF = NF
-    next
-}
-!init {
-    # Determine which columns to keep (size == 2)
-    for (i = 1; i <= maxNF; i++) {
-        if (cnt[i] == 2) keep[i] = 1
-    }
-    init = 1
-}
-{
-    # Print only the selected columns (still tab-separated)
-    first = 1
-    for (i = 1; i <= NF; i++) {
-        if (keep[i]) {
-            if (!first) printf FS
-            printf "%s", $i
-            first = 0
-        }
-    }
-    print ""
-}
-' "$MCL" "$MCL" > family_size2.tabular
-
-tr '\t' '\n' < family_size2.tabular \
-  | sed '/^$/d' \
-  | sort -u \
-  > genes_size2_unique.txt
-
-wc -l genes_size2_unique.txt
-
-# Now for family size >=10
+# We obtain the gene lists for family size ==2 
 
 awk -F'\t' '
-FNR==NR {
-    # First pass: count non-empty cells in each column
-    for (i = 1; i <= NF; i++) {
-        if ($i != "") cnt[i]++
-    }
-    if (NF > maxNF) maxNF = NF
-    next
-}
-!init {
-    # Determine which columns to keep (size >= 10)
-    for (i = 1; i <= maxNF; i++) {
-        if (cnt[i] > 10) keep[i] = 1
-    }
-    init = 1
-}
-{
-    # Print only the selected columns (still tab-separated)
-    first = 1
-    for (i = 1; i <= NF; i++) {
-        if (keep[i]) {
-            if (!first) printf FS
-            printf "%s", $i
-            first = 0
-        }
-    }
-    print ""
-}
-' "$MCL" "$MCL" > family_size_ge10.tabular
+  {
+    members = 0
+    for (i = 1; i <= NF; i++) if ($i != "") members++
+    if (members == 2) print
+  }
+' MCL_stringent.tabular > family_size2.tabular
 
-tr '\t' '\n' < family_size_ge10.tabular \
-  | sed '/^$/d' \
-  | sort -u \
-  > genes_size_ge10_unique.txt
+# Now the list of unique genes in families of size 2
 
-wc -l genes_size_ge10_unique.txt
+tr '\t' '\n' < family_size2.tabular | sed '/^$/d' | sort -u > genes_size2_unique.txt
+
+# We obtain the gene lists for family size >10
+
+awk -F'\t' '
+  {
+    members = 0
+    for (i = 1; i <= NF; i++) if ($i != "") members++
+    if (members > 10) print
+  }
+' MCL_stringent.tabular > family_gt10.tabular
+
+# Now the list of unique genes in families of size >10
+
+tr '\t' '\n' < family_gt10.tabular | sed '/^$/d' | sort -u > genes_gt10_unique.txt

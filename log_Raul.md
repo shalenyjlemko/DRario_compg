@@ -81,106 +81,57 @@ After that we can obtain a list to input the sets of genes for clustering into M
 awk -v OFS='\t' '{print $1,$2,$12}' dataset_stringent.txt > zebrafish_mcl_input.txt
 ```
 
-After that we can run MCL in EU Galaxy server. We obtain the .tabular file with the clusters. We verify how many clusters we have by counting the columns of the file and the lines (members of each cluster):
+After that we can run MCL in EU Galaxy server. We used the settings Inflation 2.0,  We obtain the .tabular file with the clusters. We verify how many clusters we have by counting the lines of the file and the columns (members of each cluster):
 
 ``` bash
 wc -l MCL_stringent.tabular
-#   21358 MCL_stringent.tabular
+#   21358 MCL_stringent.tabular clusters
 ```
 
 ``` bash
 awk -F'\t' '{print NF}' MCL_stringent.tabular | sort -nu | tail -n 1
-#   188
+#   188 members
 ```
 
-We have 188 clusters and the biggest cluster has 21358 members.
+We have 21358 clusters and the biggest cluster has 188 members.
 The commands were saved in the Blast_processing.bash script.
 We will continue working on the analysis of the clusters by retrieving the list of genes for families size 2 and the families with more than 10 members.
 
-First we retrieve the families of size 2 by extracting columns with size 2, then we will obtain a list with all of the rows inside those column in one column and then sort according to alphabetical order and remove duplicates:
+First we retrieve the families of size 2 by extracting lines with 2 columns, then we will obtain a list with all of the genes inside those lines in one column and then sort according to alphabetical order and remove duplicates:
 
 ``` bash
 awk -F'\t' '
-FNR==NR {
-    # First pass: count non-empty cells in each column
-    for (i = 1; i <= NF; i++) {
-        if ($i != "") cnt[i]++
-    }
-    if (NF > maxNF) maxNF = NF
-    next
-}
-!init {
-    # Determine which columns to keep (size == 2)
-    for (i = 1; i <= maxNF; i++) {
-        if (cnt[i] == 2) keep[i] = 1
-    }
-    init = 1
-}
-{
-    # Print only the selected columns (still tab-separated)
-    first = 1
-    for (i = 1; i <= NF; i++) {
-        if (keep[i]) {
-            if (!first) printf FS
-            printf "%s", $i
-            first = 0
-        }
-    }
-    print ""
-}
-' MCL_stringent.tabular MCL_stringent.tabular > family_size2.tabular
+  {
+    members = 0
+    for (i = 1; i <= NF; i++) if ($i != "") members++
+    if (members == 2) print
+  }
+' MCL_stringent.tabular > family_size2.tabular
 ```
 
 Then we obtain the list of genes inside those families of size 2:
 
 ``` bash
-tr '\t' '\n' < family_size2.tabular \
-  | sed '/^$/d' \
-  | sort -u \
-  > genes_size2_unique.txt
+tr '\t' '\n' < family_size2.tabular | sed '/^$/d' | sort -u > genes_size2_unique.txt
 ```
 
 Now we continue with the families of size greater than 10 members.
 
 ``` bash
 awk -F'\t' '
-FNR==NR {
-    # First pass: count non-empty cells in each column
-    for (i = 1; i <= NF; i++) {
-        if ($i != "") cnt[i]++
-    }
-    if (NF > maxNF) maxNF = NF
-    next
-}
-!init {
-    # Determine which columns to keep (size >= 10)
-    for (i = 1; i <= maxNF; i++) {
-        if (cnt[i] > 10) keep[i] = 1
-    }
-    init = 1
-}
-{
-    # Print only the selected columns (still tab-separated)
-    first = 1
-    for (i = 1; i <= NF; i++) {
-        if (keep[i]) {
-            if (!first) printf FS
-            printf "%s", $i
-            first = 0
-        }
-    }
-    print ""
-}
-' MCL_stringent.tabular MCL_stringent.tabular > family_size_ge10.tabular
+  {
+    members = 0
+    for (i = 1; i <= NF; i++) if ($i != "") members++
+    if (members > 10) print
+  }
+' MCL_stringent.tabular > family_gt10.tabular
+
 ```
 
 Then we obtain the list of genes inside those families of size greater than 10:
 
 ``` bash
-tr '\t' '\n' < family_size_ge10.tabular \
-  | sed '/^$/d' \
-  | sort -u \
-  > genes_size_ge10_unique.txt
+tr '\t' '\n' < family_gt10.tabular | sed '/^$/d' | sort -u > genes_gt10_unique.txt
 ```
 
 The commands were saved into the MCL_processing.bash script.
