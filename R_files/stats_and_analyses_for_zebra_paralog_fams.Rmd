@@ -1,0 +1,247 @@
+---
+title: "compgen_project_zebrafish"
+author: "Michalis Lazar"
+date: "2025-11-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Exploratory Data Analysis on protein families (paralogs) in zebrafish
+```{r}
+setwd("C:/Users/mihal/Desktop/M2_Genomics/Comparative Genomics/histograms_zebrafish/")
+
+HS_fam_path = "zebrafish_HS_MCL_families.txt"
+MS_fam_path = "zebrafish_MS_MCL_families.txt"
+LS_fam_path = "zebrafish_LS_MCL_families.txt"
+
+fam_HS <- read.table(HS_fam_path,
+                     header = FALSE, stringsAsFactors = FALSE)
+
+colnames(fam_HS) <- c("gene", "family")
+
+fam_MS <- read.table(MS_fam_path,
+                     header = FALSE, stringsAsFactors = FALSE)
+
+colnames(fam_MS) <- c("gene", "family")
+
+fam_LS <- read.table(LS_fam_path,
+                     header = FALSE, stringsAsFactors = FALSE)
+
+colnames(fam_LS) <- c("gene", "family")
+
+```
+
+#summary stats for each set 
+```{r}
+sizes_HS <- table(fam_HS$family)
+sizes_MS <- table(fam_MS$family)
+sizes_LS <- table(fam_LS$family)
+#numeric vectors which no longer know which is which family, just the sizes
+```
+
+#HS (most strict)
+```{r}
+summary(as.numeric(sizes_HS))
+
+max(as.numeric(sizes_HS)) #115
+
+table(as.numeric(sizes_HS))[1:10]   # how many families of size 1,2,...,10
+
+```
+#Medium strictness
+```{r}
+summary(as.numeric(sizes_MS))
+
+max(as.numeric(sizes_MS)) #264
+
+table(as.numeric(sizes_MS))[1:10] 
+```
+
+#Least strict 
+```{r}
+summary(as.numeric(sizes_LS))
+
+max(as.numeric(sizes_LS)) #916
+
+table(as.numeric(sizes_LS))[1:10]   # how many families of size 1,2,...,10
+
+```
+
+
+#Histogram of family sizes.
+#describe the distribution of paralogous family sizes under each stringency regime
+
+Linear scale (raw family sizes) 
+```{r}
+
+#Purpose: detect small paralog groups
+
+hist(as.numeric(sizes_HS), breaks = 50,
+     main = "Zebrafish paralog families (HS, MCL)",
+     xlab = "Family size")
+
+hist(as.numeric(sizes_MS), breaks = 50,
+     main = "Zebrafish paralog families (MS, MCL)",
+     xlab = "Family size")
+
+hist(as.numeric(sizes_LS), breaks = 50,
+     main = "Zebrafish paralog families (LS, MCL)",
+     xlab = "Family size")
+
+```
+
+
+
+```{r}
+## numeric vector of family sizes
+x_HS <- as.numeric(sizes_HS)
+
+## 1) Full histogram, one bin per size
+breaks_full <- seq(min(x_HS) - 0.5, max(x_HS) + 0.5, by = 1)
+
+hist(x_HS,
+     breaks = breaks_full,
+     main   = "Zebrafish paralog families (HS, MCL)",
+     xlab   = "Family size")
+
+## 2) Zoomed view for sizes 2–20 (for the report)
+x_HS_zoom    <- x_HS[x_HS >= 2 & x_HS <= 20]
+breaks_zoom  <- seq(1.5, 20.5, by = 1)
+
+hist(x_HS_zoom,
+     breaks = breaks_zoom,
+     main   = "Zebrafish paralog families (HS, MCL, sizes 2–20)",
+     xlab   = "Family size")
+breaks_zoom_more  <- seq(1.5, 5.5, by = 1)
+x_HS_zoom_more    <- x_HS[x_HS >= 2 & x_HS <= 5]
+hist(x_HS_zoom_more,
+     breaks = breaks_zoom_more,
+     main   = "Zebrafish paralog families (HS, MCL, sizes 2–5)",
+     xlab   = "Family size")
+```
+
+
+
+
+for PANTHER Overrepresentation analysis
+
+```{r}
+fam2_HS   <- names(sizes_HS[sizes_HS == 2])
+fam10p_HS <- names(sizes_HS[sizes_HS >= 10])
+
+genes_fam2_HS   <- fam_HS$gene[fam_HS$family %in% fam2_HS]
+genes_fam10p_HS <- fam_HS$gene[fam_HS$family %in% fam10p_HS]
+
+write.table(genes_fam2_HS,   "zfish_HS_families_size2_genes.txt",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+write.table(genes_fam10p_HS, "zfish_HS_families_size10plus_genes.txt",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maybe not Essential stuff...
+Log scale (log10 family sizes)
+```{r}
+#Purpose: detect broad structure and power-law tail 
+
+hist(log10(as.numeric(sizes_LS)), breaks = 50,
+     main = "Zebrafish LS (log10 family size)",
+     xlab = "log10(family size)")
+
+hist(log10(as.numeric(sizes_HS)), breaks = 50,
+     main = "Zebrafish HS (log10 family size)",
+     xlab = "log10(family size)")
+
+hist(log10(as.numeric(sizes_MS)), breaks = 50,
+     main = "Zebrafish MS (log10 family size)",
+     xlab = "log10(family size)")
+
+```
+
+What does power-law tail entail?
+
+
+Truncated linear view
+```{r}
+#lots of small families for HS
+
+hist(as.numeric(sizes_HS),
+     breaks = 50,
+     xlim   = c(1, 20),
+     main   = "Zebrafish paralog families (HS, MCL)",
+     xlab   = "Family size (truncated at 20)")
+
+hist(as.numeric(sizes_MS),
+     breaks = 50,
+     xlim   = c(1, 20),
+     main   = "Zebrafish paralog families (MS, MCL)",
+     xlab   = "Family size (truncated at 20)")
+
+hist(as.numeric(sizes_LS),
+     breaks = 50,
+     xlim   = c(1, 20),
+     main   = "Zebrafish paralog families (LS, MCL)",
+     xlab   = "Family size (truncated at 20)")
+```
+```{r}
+mean(as.numeric(sizes_HS))
+median(as.numeric(sizes_HS))
+quantile(as.numeric(sizes_HS), probs=c(.90, .95, .99))
+
+```
+
+```{r}
+plot(density(log10(as.numeric(sizes_HS))), col="red")
+lines(density(log10(as.numeric(sizes_MS))), col="blue")
+lines(density(log10(as.numeric(sizes_LS))), col="green")
+
+#This reveals overall shape without axis compression.
+```
+
+```{r}
+plot(ecdf(as.numeric(sizes_HS)), col="red", xlim=c(0, max(sizes_LS)))
+lines(ecdf(as.numeric(sizes_MS)), col="blue")
+lines(ecdf(as.numeric(sizes_LS)), col="green")
+
+```
+```{r}
+boxplot(
+  log10(as.numeric(sizes_HS)),
+  log10(as.numeric(sizes_MS)),
+  log10(as.numeric(sizes_LS)),
+  names=c("HS","MS","LS")
+)
+
+```
+
+```{r}
+#Checking for power law behaviour
+#If the right-hand part looks approximately linear → that’s power-law behavior.
+sizes <- as.numeric(sizes_LS)
+freq <- table(sizes)
+
+plot(log10(as.numeric(names(freq))),
+     log10(as.numeric(freq)),
+     xlab="log10(size)",
+     ylab="log10(count)",
+     main="Log–log plot of family-size distribution")
+
+```
+
