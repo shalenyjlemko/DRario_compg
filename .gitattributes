@@ -5,5 +5,6 @@ data/GCF_000002035.6_GRCz11_genomic.fna filter=lfs diff=lfs merge=lfs -text
 data/InsertTime.tsv filter=lfs diff=lfs merge=lfs -text
 *.txt filter=lfs diff=lfs merge=lfs -text
 *.tabular filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
 data/zebrafish_blast_results_clean.txt.gz filter=lfs diff=lfs merge=lfs -text
 data/Drerio_FishTEDB/Danio_rerio_TE_table.tsv filter=lfs diff=lfs merge=lfs -text
