@@ -11,10 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 Exploratory Data Analysis on protein families (paralogs) in zebrafish
 
 ```{r}
+setwd("..") #set working directory to project root
 
-HS_fam_path = "data/zebrafish_HS_MCL_families.txt"
-MS_fam_path = "data/zebrafish_MS_MCL_families.txt"
-LS_fam_path = "data/zebrafish_LS_MCL_families.txt"
+HS_fam_path = paste0(getwd(),"/data/families_MCL/zebrafish_HS_MCL_families.txt")
+MS_fam_path = paste0(getwd(),"/data/families_MCL/zebrafish_MS_MCL_families.txt")
+LS_fam_path = paste0(getwd(),"/data/families_MCL/zebrafish_LS_MCL_families.txt")
 
 fam_HS <- read.table(HS_fam_path,
                      header = FALSE, stringsAsFactors = FALSE)
