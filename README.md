@@ -16,6 +16,23 @@ It can be proved by one of the paper (presence of 7 Hox clusters (vs 4 in humans
 
 Our Project's Goal: To distinguish between these ancient "Ohnologs" (via low-stringency BLAST) and recent tandem duplications (via high-stringency BLAST).
 
+### Erine parts on this 
+Data Preprocessing & BLAST Results
+
+1. Data Source & Cleaning I started by downloading the official Danio rerio proteome (GRCz11) from Ensembl. The raw data contained every known isoform for every gene, which would have created "fake" duplicates in our analysis. To fix this, I wrote a Python script to filter the file, retaining only the longest isoform for each gene to create a non-redundant canonical dataset.
+
+2. Removing Bias (Mitochondria) I also filtered out mitochondrial proteins from the dataset. Since mitochondrial DNA evolves at a different rate and has a different inheritance pattern than the nuclear genome, keeping these entries would have skewed our whole-genome statistics.
+
+3. Quality Control (QC) Before running the alignment, I generated histograms to check the data quality. The protein length distribution looks healthy (peaking ~400aa). Crucially, the pipeline successfully handled "giant" proteins like Titin (>29,000aa), confirming that we haven't lost large data points during the filtration.
+
+4. All-vs-All BLASTp I have finished running the All-vs-All BLASTp (aligning the ~26,000 filtered proteins against themselves). I used specific formatting parameters to include query and subject lengths in the output, which is required for the coverage calculations we need to do next.
+
+5. Accessing the Data The final BLAST results file (zebrafish_blast_results.txt.gz) is uploaded to our GitHub repository.
+
+    Note: It is compressed to save space. You will need to run gunzip on it before using it for the TE or Clustering analysis.
+
+# GUYS PLEASE ADD WHAT YOU DID SO I CAN UNDERSTAND AND CONCLUDE
+
 ## Transposable elements
 
 ## References:
