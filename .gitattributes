@@ -16,4 +16,5 @@ data/Info_KaKS/*.gtf filter=lfs diff=lfs merge=lfs -text
 *.fasta.out.gff.sorted.gz filter=lfs diff=lfs merge=lfs -text
 *.tbi filter=lfs diff=lfs merge=lfs -text
 *.fai filter=lfs diff=lfs merge=lfs -text
+*.gff filter=lfs diff=lfs merge=lfs -text
 data/Drerio_FishTEDB/Danio_rerio_TE_table.tsv filter=lfs diff=lfs merge=lfs -text
