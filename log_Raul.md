@@ -266,6 +266,8 @@ It started at Sat Nov 29 20:37:58 2025. It has encountered multiple inconsistenc
 
 I find it outstanding that RandomMasker in Galaxy France is still running after so many hours. It started more than 24h ago. I will try to use Galazy EU server to run it again.
 
+I managed to scrape the data from FishTEDB using a wget command to obtain the full data of TEs in Danio rerio including sequences. I added the data to our GitHub repository in the data/Drerio_FishTEDB folder.
+
 *******************************
 
 ## Sunday November 30th, 2025
