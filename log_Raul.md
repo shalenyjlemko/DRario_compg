@@ -146,3 +146,126 @@ We perform a preliminary functional analysis of those genes using PantherDB with
 We will continue with the functional analysis of those genes on R later.
 
 *******************************
+
+## Saturday November 29th, 2025
+
+I realized my mistake at processing the MCL output file. I was counting columns as the clusters. I fixed the scripts accordingly and re-ran the analysis. Modify my bash scripts accordingly.
+Now I started working in how to obtain the Ka/Ks ratios for the gene families. I started by creating a list of pairs from the stringent blast results to input into ParaAT. I extracted the first two columns of the zebrafish_mcl_input.txt file:
+
+```bash
+cut -f1,2 zebrafish_mcl_input.txt > pairs_for_paraat.txt
+```
+
+Then I prepared the CDS extracted from [Ensembl](https://ftp.ensembl.org/pub/release-115/fasta/danio_rerio/cds/). I cleaned the fasta file to have only the sequence identifiers in the headers.
+
+```bash
+awk '/^>/{sub(/^>/,">", $1); print $1; next} !/^>/' Danio_rerio.GRCz11.cds.all.fa > drerio.clean.fasta
+```
+
+ I also prepered my conda environment with the required tools: EMBOSS (for transeq),MAFFT and KaKsCalculator2.
+
+```bash
+conda install bioconda::emboss
+conda install bioconda::mafft
+conda install kakscalculator2
+```
+
+Then I translated the CDS fasta into a protein fasta using transeq from EMBOSS:
+
+```bash
+transeq -sequence drerio.clean.fasta -outseq zebrafish.pep.fasta -table 1
+```
+
+Now I needed a tool to automate the KaKs calculation. I downloaded [ParaAT2.0](https://ngdc.cncb.ac.cn/tools/paraat) from China National Center for Bioinformation and unzipped it. I added them to src folder. I made the scripts executable and added the current directory to the PATH.
+
+```bash
+chmod +x ParaAT.pl
+chmod +x Epal2nal.pl
+export PATH="$(pwd):$PATH"
+```
+
+Finally I ran ParaAT with the following command:
+
+```bash
+perl ../../src/ParaAT2.0/ParaAT.pl \
+  -h pairs_for_paraat.txt \
+  -n drerio.clean.fasta \
+  -a zebrafish.pep.fasta \
+  -m mafft \
+  -p processors.txt \
+  -f axt \
+  -k \
+  -o ParaAT_output
+```
+
+I realized that I needed to create a processors.txt file with a single line containing the number 4 to indicate the number of processors to use. After I run it i realized a major issue. The paths shared contain only the Protein IDs and not the CDS IDs. I will need to create a mapping file between both IDs to be able to run ParaAT correctly.
+I eliminated the version information as the GTF didn't had it in their IDs and then created the mapping file by downloading the Danio rerio GTF file from Ensembl and extracting the relevant information with the following command:
+
+```bash
+awk '{
+  id1 = $1;
+  id2 = $2;
+  sub(/\.[0-9]+$/, "", id1);   # remove .2, .7, etc.
+  sub(/\.[0-9]+$/, "", id2);
+  print id1 "\t" id2;
+}' pairs_for_paraat.txt > pairs_for_paraat.noversion.txt
+```
+
+Then I extracted the relevant information from the GTF file:
+
+```bash
+perl -ne '
+  next if /^#/;                          # skip comments
+  next unless /\tCDS\t/ && /protein_id/; # only CDS lines that have a protein_id
+  my ($tx)   = /transcript_id "([^"]+)"/;
+  my ($prot) = /protein_id "([^"]+)"/;
+  print "$prot\t$tx\n" if $tx && $prot;
+' Danio_rerio.GRCz11.115.gtf > prot2tx.map
+```
+
+Then I proceded to run the mapping between both files to obtain the CDS IDs for each Protein ID in the pairs file:
+
+``` bash
+awk 'NR==FNR{
+        map[$1]=$2;        # map[protein] = transcript   (from prot2tx.map)
+        next
+     }
+     {
+        if (1 in map && $2 in map && map[$1] != map[$2])
+            print map[$1] "\t" map[$2];
+     }' prot2tx.map pairs_for_paraat.noversion.txt > pairs_tx.txt
+```
+
+Now I have to verify I removed the versioning information correctly and then I will be able to run ParaAT again with the correct pairs file.
+
+``` bash
+# pep: remove `_1`
+awk '/^>/{sub(/^>/,"",$1); sub(/_.*/,"",$1); print ">"$1; next} !/^>/' \
+    zebrafish.pep.fasta > zebrafish.tx.pep.fasta
+
+# cds: ensure header is just first token
+awk '/^>/{sub(/^>/,"",$1); print ">"$1; next} !/^>/' \
+    Danio_rerio.GRCz11.cds.all.fa > drerio.tx.cds.fasta
+```
+
+I will run ParaAT now with the corrected files.
+
+```bash
+perl ../../src/ParaAT2.0/ParaAT.pl \
+  -h pairs_tx.txt \
+  -n drerio.tx.cds.fasta \
+  -a zebrafish.tx.pep.fasta \
+  -m mafft \
+  -p processors.txt \
+  -f axt \
+  -k \
+  -o ParaAT_output
+```
+
+It started at Sat Nov 29 20:37:58 2025. It has encountered multiple inconsistences between the pep and nuc sequences files (ERROR: inconsistency between the following pep and nuc seqs. Run bl2seq (-p tblastn) or GeneWise to see the inconsistency.). KaKs calculator started at Sat Nov 29 21:56:12 2025. I will have to check the output files later. Decided due to slow process to run ParaAT on the local machine of my teamate Michalis-Daniel Lazar who has a more powerful computer.
+
+I find it outstanding that RandomMasker in Galaxy France is still running after so many hours. It started more than 24h ago. I will try to use Galazy EU server to run it again.
+
+*******************************
+
+## Sunday November 30th, 2025
