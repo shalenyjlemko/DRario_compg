@@ -216,3 +216,11 @@ awk '{cnt[$1]++; bp[$1]+= $4}
   | sort
 ```
 
+## TE analysis
+
+**01.12**
+
+Wrote and ran the script to extract TE data out of the author's sorted gff
+script [here](/projects/compG/data/Drerio_FishTEDB/extract_tsv.py)
+
+Now performing TE analysis
