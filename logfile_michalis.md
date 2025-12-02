@@ -3,6 +3,13 @@ LOGFILE for the project of COMPARATIVE GENOMICS
 Author: LAZAR Michalis-Daniel
 
 
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  before Thursday 27 November 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+We discussed as a team to see if we have sufficient data for this project to work and we saved all the links. I skimmed some papers on comparative genomics for Danio rerio.
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
 
@@ -19,14 +26,7 @@ I started by doing a brief literature review to understand the contenxt our proj
 Found the following platform that reunites all the possible resources on Danio rerio: https://zfin.org/
 
 
-
-Also learned about \*Ohnologs\* which is a special subtype of paralog that arose from a whole-genome duplication event as opposed to
-
-a small local/segmental duplication and named after Susumu Ohno who proposed that genome duplication 
-
-was key in vertebrate evolution.
-
-
+Also learned about \*Ohnologs\* which is a special subtype of paralog that arose from a whole-genome duplication event as opposed to a small local/segmental duplication and named after Susumu Ohno who proposed that genome duplication was key in vertebrate evolution.
 
 Found the following paper on patterns of ohnolog retention in 6 salmon species, maybe we could look into it for Danio rerio.
 
@@ -93,17 +93,13 @@ Reminder!The columns are the following:
 14: slen (subject length)
 
 
-
 Coverage on each protein: cov\_q = alen/qlen, cov\_s = alen/slen
-
 
 
 I need to decide on some concrete thresholds:
 
 
-
 **High stringency (HS): very high-confidence paralogs**
-
 
 
 pident ≥ 80
@@ -262,9 +258,6 @@ ENSDARP00000000803.9    ENSDARP00000005224.6    1757
 ENSDARP00000000803.9    ENSDARP00000115698.1    1548
 
 
-
-
-
 >wc -l zebrafish\_\*\_forMCL.txt
 
 &nbsp;  35750 zebrafish\_HS\_forMCL.txt
@@ -274,23 +267,18 @@ ENSDARP00000000803.9    ENSDARP00000115698.1    1548
 &nbsp; 164621 zebrafish\_MS\_forMCL.txt
 
 
-
 I went on Galaxy Europe and used the following tool: Markov Cluster Algorithm for graphs (Galaxy Version 22.282+galaxy0)
 
 First I used the default parameter for "Inflation" which determines the cluster granularity:2.0 (how would the families=clusters change if I change the parameter?)
 
 
-
 MCL: “random walks stay inside dense groups” idea.
-
 
 
 We have "one cluster per line" format in the output files (each line corresponds to one family of proteins).
 
 
-
 To make work easier, we want a file with 2 columns (proteinID clusterID)
-
 
 
 nl -ba #number all lines exactly as they appear
@@ -310,7 +298,6 @@ nl -ba MCL\_families\_HS.tabular | awk '{
 &nbsp; }
 
 }' > zebrafish\_HS\_MCL\_families.txt
-
 
 
 
@@ -338,16 +325,12 @@ ENSDARP00000125125.1 1
 ENSDARP00000125164.1 1
 
 
-
 Now I will do some histograms in Rstudio.
-
 
 
 The histograms reveal that almost all families are tiny. Everything is piled up in the first bin.
 
 Most "families" are just pairs: 
-
-
 
 summary(as.numeric(sizes\_HS))
 
@@ -356,9 +339,7 @@ summary(as.numeric(sizes\_HS))
 \#  2.000   2.000   2.000   2.641   2.000 115.000 
 
 
-
 3326 families of size 2
-
 
 
 Max size = 115
@@ -460,3 +441,60 @@ tired, will analyse the results tomorrow.
 
 I JUST SAW RAUL PUSHED THE FILES WITH THE OG OVERREPRESENTATION ANALYSIS BEFORE ME! at least I practiced a bit! but I wish we allocate tasks (and communicate) more efficiently so we can cover the breadth of the project in these high stake times!!!
 
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  Saturday 29 November 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+I have a stronger machine so I will run the tool to make the Kaks plots overnight since it's quite computationally demanding.
+I needed to setup the machine to never sleep, install the necessary tools, get the data and run kaks calculator. I used "tmux" to keep the wsl awake.
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  Sunday 30 November 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+I slept with the the laptop humming loudly in my room while running the job, in retrospect it would have been a better idea had I let it somewhere colder since it ran slower (realized the laptop protects itself from overheating by disabling some cores).
+Anyway, the kaks calculations took around 21 hours on 20 threads so I could not use my laptop for anything else on Sunday: good thing the weather was dry and cold so I left the laptop out in the balcony all day to regulate the temperature of the CPUs (there was lots of heat) and run the job faster. 21 hours was a lot but it could have been even worse! thankfully the results were not erroneous.
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  Monday 1 December 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+As expected, we are having git conflict issues, when I did not push my local changes and tried to pull the changes from the remote for example, it is very useful to use git stash:
+
+git stash push --include-untracked
+git pull
+git stash pop
+
+ALSO REMEMBER NOT TO USE (it can break the team's workflow since it rewrites the repo's history): git push --force 
+
+USE INSTEAD, whenever possible: git push --force-with-lease
+
+I took a look at the Kaks graph at the whole genome level. We can clearly see the peak at around 0.3-0.6, which is most definitely the ohnologs (WGD paralogs in fish) from the teleost-specific whole genome duplication. Retained duplicates have Ka/Ks lower than 1 (so purifying selection dominates, with deleterious amino acid changes being removed). This confirms that we ran the calculation well. Also notice the recent paralogs. I will propose we look at the ohnologs more closely, combining with the GO overrepresentation data!
+
+I need to think of some intra-genome analysis we can run so we have what to present of friday.
+
+dot matrix within chromosomes= a zoomed-in view of self-synteny (chromosome vs itself) (?)
+
+synteny blocks within genome (?)
+
+Found the following landmark paper:  DOI: 10.1038/nature12111
+i think we may want to present it on friday, I don't think we should run a pipeline to super impose the segments and blocks with conserved synteny in humans on the zebrafish genome.
+
+I found this cool web tool and produced a nice graph to add! Genomicus: karyotype view
+
+The zebrafish–human karyotype comparison shows that each zebrafish chromosome is a mosaic of small synteny blocks originating from many different human chromosomes, reflecting extensive genome rearrangement since their divergence ~450 million years ago. The high fragmentation of colours, compared to the much larger and more continuous blocks observed in mammal–mammal comparisons, is a direct consequence of the teleost-specific whole-genome duplication (3R) followed by massive gene loss and intrachromosomal shuffling. Despite this fragmentation, conserved micro-synteny remains detectable throughout the genome, indicating persistence of ancient vertebrate chromosomal relationships at a finer scale.
+
+NOW, back to self-synteny, but WHICH CHROMOSOME is more interesting?
+
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  Tuesday 2 December 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
