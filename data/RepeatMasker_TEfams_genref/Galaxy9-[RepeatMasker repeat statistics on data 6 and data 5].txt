@@ -1,3 +1,60 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c2ec527af6da1bb8b128f181b1ed28cb0b3b6881c3171fdccfa8481f6766f1de
-size 2487
+==================================================
+file name: rm_input.fasta           
+sequences:          1923
+total length: 1679203469 bp  (1674511999 bp excl N/X-runs)
+GC level:         36.60 %
+bases masked: 1000262962 bp ( 59.73 %)
+==================================================
+               number of      length   percentage
+               elements*    occupied  of sequence
+--------------------------------------------------
+Retroelements       544121    200686189 bp   11.98 %
+   SINEs:           218453     48230260 bp    2.88 %
+   Penelope:             0            0 bp    0.00 %
+   LINEs:           151870     54539940 bp    3.26 %
+    CRE/SLACS            0            0 bp    0.00 %
+     L2/CR1/Rex      72770     27554000 bp    1.65 %
+     R1/LOA/Jockey       0            0 bp    0.00 %
+     R2/R4/NeSL        380       189232 bp    0.01 %
+     RTE/Bov-B        9402      4298210 bp    0.26 %
+     L1/CIN4         38373     14483595 bp    0.86 %
+   LTR elements:    173798     97915989 bp    5.85 %
+     BEL/Pao          5266      4314021 bp    0.26 %
+     Ty1/Copia       22652      9842572 bp    0.59 %
+     Gypsy/DIRS1     88545     63540295 bp    3.79 %
+       Retroviral    37294     13392772 bp    0.80 %
+
+DNA transposons     3093689    735240415 bp   43.91 %
+   hobo-Activator   766514    191750001 bp   11.45 %
+   Tc1-IS630-Pogo   212172     68441166 bp    4.09 %
+   En-Spm                0            0 bp    0.00 %
+   MULE-MuDR             0            0 bp    0.00 %
+   PiggyBac          43080     13937690 bp    0.83 %
+   Tourist/Harbinger193604     69644734 bp    4.16 %
+   Other (Mirage,     6486      2981540 bp    0.18 %
+    P-element, Transib)
+
+Rolling-circles          0            0 bp    0.00 %
+
+Unclassified:        46334     13355985 bp    0.80 %
+
+Total interspersed repeats:   949282589 bp   56.69 %
+
+
+Small RNA:          180914     36928213 bp    2.21 %
+
+Satellites:              2         1381 bp    0.00 %
+Simple repeats:     762383     46611618 bp    2.78 %
+Low complexity:      64700      4367374 bp    0.26 %
+==================================================
+
+* most repeats fragmented by insertions or deletions
+  have been counted as one element
+  Runs of >=20 X/Ns in query were excluded in % calcs
+
+
+RepeatMasker version 4.1.5 , default mode
+                                        
+run with rmblastn version 2.13.0+
+The query was compared to classified sequences in ".../dataset_ca594c72-4bd5-44a4-9bc0-0541be5cff6c.dat"
+FamDB: 

@@ -1,22 +1,18 @@
-.fna filter=lfs diff=lfs merge=lfs -text
-.tsv filter=lfs diff=lfs merge=lfs -text
-.txt filter=lfs diff=lfs merge=lfs -text
+# Only track specific large files (>100MB) with LFS
+data/Danio_rerio.age filter=lfs diff=lfs merge=lfs -text
+data/danRer11_te_simple.tsv filter=lfs diff=lfs merge=lfs -text
 data/GCF_000002035.6_GRCz11_genomic.fna filter=lfs diff=lfs merge=lfs -text
-data/InsertTime.tsv filter=lfs diff=lfs merge=lfs -text
-*.txt filter=lfs diff=lfs merge=lfs -text
-*.tabular filter=lfs diff=lfs merge=lfs -text
-*.gz filter=lfs diff=lfs merge=lfs -text
 data/zebrafish_blast_results_clean.txt.gz filter=lfs diff=lfs merge=lfs -text
-data/Info_KaKS/*.fa filter=lfs diff=lfs merge=lfs -text
-data/Info_KaKS/*.fasta filter=lfs diff=lfs merge=lfs -text
-data/Info_KaKS/*.gtf filter=lfs diff=lfs merge=lfs -text
-*.gtf filter=lfs diff=lfs merge=lfs -text
-*.fasta filter=lfs diff=lfs merge=lfs -text
-*.fa filter=lfs diff=lfs merge=lfs -text
-*.fasta.out.gff.sorted.gz filter=lfs diff=lfs merge=lfs -text
-*.tbi filter=lfs diff=lfs merge=lfs -text
-*.fai filter=lfs diff=lfs merge=lfs -text
-*.gff filter=lfs diff=lfs merge=lfs -text
+data/zebrafish_LS.txt filter=lfs diff=lfs merge=lfs -text
+data/Blast_Homologs/zebrafish_blast_results_clean.txt filter=lfs diff=lfs merge=lfs -text
+data/Drerio_FishTEDB/Danio_rerio.fasta filter=lfs diff=lfs merge=lfs -text
+data/Drerio_FishTEDB/Danio_rerio.fasta.out.gff.sorted.gz filter=lfs diff=lfs merge=lfs -text
+data/Drerio_FishTEDB/Danio_rerio.GRCz11.115.gff3 filter=lfs diff=lfs merge=lfs -text
 data/Drerio_FishTEDB/Danio_rerio_TE_table.tsv filter=lfs diff=lfs merge=lfs -text
-*.gff3 filter=lfs diff=lfs merge=lfs -text
-*.tsv filter=lfs diff=lfs merge=lfs -text
+data/Info_KaKS/Danio_rerio.GRCz11.115.gtf filter=lfs diff=lfs merge=lfs -text
+data/RepeatMasker_TEfams_genref/Galaxy11-[RepeatMasker[[:space:]]repeat[[:space:]]annotation[[:space:]]on[[:space:]]data[[:space:]]6[[:space:]]and[[:space:]]data[[:space:]]5].gff filter=lfs diff=lfs merge=lfs -text
+data/RepeatMasker_TEfams_genref/Galaxy7-[RepeatMasker[[:space:]]masked[[:space:]]sequence[[:space:]]on[[:space:]]data[[:space:]]6[[:space:]]and[[:space:]]data[[:space:]]5].fasta filter=lfs diff=lfs merge=lfs -text
+data/RepeatMasker_TEfams_genref/Galaxy8-[RepeatMasker[[:space:]]output[[:space:]]log[[:space:]]on[[:space:]]data[[:space:]]6[[:space:]]and[[:space:]]data[[:space:]]5].tabular filter=lfs diff=lfs merge=lfs -text
+"data/RepeatMasker_TEfams_genref/Galaxy11-[RepeatMasker repeat annotation on data 6 and data 5].gff" filter=lfs diff=lfs merge=lfs -text
+"data/RepeatMasker_TEfams_genref/Galaxy7-[RepeatMasker masked sequence on data 6 and data 5].fasta" filter=lfs diff=lfs merge=lfs -text
+"data/RepeatMasker_TEfams_genref/Galaxy8-[RepeatMasker output log on data 6 and data 5].tabular" filter=lfs diff=lfs merge=lfs -text
