@@ -224,3 +224,17 @@ Wrote and ran the script to extract TE data out of the author's sorted gff
 script [here](/projects/compG/data/Drerio_FishTEDB/extract_tsv.py)
 
 Now performing TE analysis
+
+**02.12**
+
+Resolved a bunch of conflicts on the repository, investigated the issue with LFS being full. 
+
+Wrote per chromosome TE composition code inside the [notebook](data/Drerio_FishTEDB/perChr_TE.ipynb)
+
+Wrote script to extract TE density as well as gene density on the chromosome body using sliding window method. Found an appropriate .gff3 [file](data/Drerio_FishTEDB/Danio_rerio.GRCz11.115.gff3) from ensembl to perform this. 
+
+Generated graphs for all of this
+
+**03.12**
+
+Investigated the graphs from 02.12, performed per chromosome TE composition analysis. Chose the appropriate graphs to include in the presentation based on that.
