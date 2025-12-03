@@ -498,3 +498,32 @@ NOW, back to self-synteny, but WHICH CHROMOSOME is more interesting?
 \*  Tuesday 2 December 2025 \*
 
 \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+I tried to explore intra-genome synteny and general structural signals in Danio rerio
+to see if I can produce some interpretable figures like those in the course, maybe
+showcasing teleost WGD, inversions and segmental duplications.
+
+I tried to use SynMap to generate a whole-genome self-synteny dotplot (CDS vs CDS):
+loaded Danio rerio reference genome (id39783, GRCz11) for genome 1 and genome 2 (self-comparison), used default LAST + DAGChainer settings.
+
+result: a genome-wide CDS-based anchor dotplot (25 × 25 chromosome grid)
+
+ & issues: At full-genome scale the plot is dominated by noise due to weak paralogs, unanchored scaffolds, and the very high level of post-WGD scrambling in zebrafish.
+
+SO, unfortunately, nothing too exciting (or clear like the mammalian synteny):
+zebrafish synteny blocks are short and fragmented.
+
+it might also be that the default parameters for DAGChainer were too permisive:
+Minimum aligned pairs (A=5 ) maybe allowed too many weak paralogs;
+Whole-genome scale hid small blocks typical of ancient WGD-derived genomes;
+Needed stronger filtering + per-chromosome focus;
+
+I am thinking to switch from whole-genome to targeted chromosome-pair analysis.
+
+I am running out of time however, so I will now focus on preparing for the progress presentation on friday.
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+\*  Wednesday 3 December 2025 \*
+
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
