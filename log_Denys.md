@@ -238,3 +238,13 @@ Generated graphs for all of this
 **03.12**
 
 Investigated the graphs from 02.12, performed per chromosome TE composition analysis. Chose the appropriate graphs to include in the presentation based on that.
+
+**03.12 c.d.**
+After the class we all discussed what we have been doing and what needs to be done. As a result we (me and Raul) are discussing the strategy about what data we have in the current duplicated genes we are analyzing, and what analyses can we do on it. Based on the distribution of the Ka/Ks ratios we agreed on splitting the gene families into 4 categories based on their Ka/Ks:
+<= 0.1 -- likely housekeeping genes, under very high purifying selection
+0.1 > x < 0.9 -- genes under the purifying selection (subfunctionalization)
+0.9 => x < 1.1 -- genes under neutral selection
+above 1.1 -- genes under adaptive selection
+
+**04.12**
+Did some research on the teleost fish for the presetntation, finished up the slides and figures. 
