@@ -1,5 +1,10 @@
+# Summary
+- TE analysis
+- Guiding interpretation of the results
+
+
 **long time ago**
-let up the repository
+set up the repository
 
 # Getting data
 
@@ -248,3 +253,17 @@ above 1.1 -- genes under adaptive selection
 
 **04.12**
 Did some research on the teleost fish for the presetntation, finished up the slides and figures. 
+
+
+**04.12 - Notes from the presentations**
+
+Ask what % of the genes in the genome is annotatted. 
+Justify the use of each tool, e.g. MCScanX
+
+Try to look at the TAGs, look at their position and orientation
+
+Add reasoning to why we used every parameter and every method, like Sylvia did
+Do TE enrichment by duplication type
+
+**14.01**
+Correlation analysis
