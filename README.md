@@ -30,9 +30,6 @@ Data Preprocessing & BLAST Results
 
     Note: It is compressed to save space. You will need to run gunzip on it before using it for the TE or Clustering analysis.
 
-
-## Transposable elements
-
 ## References:
 
 - The genome paper 
