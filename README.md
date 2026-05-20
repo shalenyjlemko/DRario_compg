@@ -16,7 +16,6 @@ It can be proved by one of the paper (presence of 7 Hox clusters (vs 4 in humans
 
 Our Project's Goal: To distinguish between these ancient "Ohnologs" (via low-stringency BLAST) and recent tandem duplications (via high-stringency BLAST).
 
-### Erine parts on this 
 Data Preprocessing & BLAST Results
 
 1. Data Source & Cleaning I started by downloading the official Danio rerio proteome (GRCz11) from Ensembl. The raw data contained every known isoform for every gene, which would have created "fake" duplicates in our analysis. To fix this, I wrote a Python script to filter the file, retaining only the longest isoform for each gene to create a non-redundant canonical dataset.
@@ -31,7 +30,6 @@ Data Preprocessing & BLAST Results
 
     Note: It is compressed to save space. You will need to run gunzip on it before using it for the TE or Clustering analysis.
 
-# GUYS PLEASE ADD WHAT YOU DID SO I CAN UNDERSTAND AND CONCLUDE
 
 ## Transposable elements
 
